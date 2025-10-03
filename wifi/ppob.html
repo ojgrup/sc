@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotspot Login - $(identity)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* ====================
+           CSS: Gaya Mirip Aplikasi PPOB
+           ==================== */
+        :root {
+            --primary-color: #00897b; /* Hijau Teal (Finansial/PPOB) */
+            --secondary-color: #4db6ac; /* Hijau Lebih Cerah */
+            --text-light: #ffffff;
+            --text-dark: #263238; /* Abu-abu Gelap */
+            --background-light: #f4f6f9; /* Background yang sangat bersih */
+            --card-bg: #ffffff;
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+
+        /* CARD LOGIN UTAMA */
+        .login-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 0 20px 20px 20px;
+            box-shadow: var(--shadow-light);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        /* HEADER DENGAN GRADIENT PPOB */
+        .header-app {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #00acc1 100%);
+            color: var(--text-light);
+            padding: 20px 20px 30px 20px;
+            margin: 0 -20px 20px -20px;
+            font-size: 1.3em;
+            font-weight: 600;
+            text-align: left;
+            position: relative;
+            border-bottom-left-radius: 50% 15px;
+            border-bottom-right-radius: 50% 15px;
+            z-index: 1;
+        }
+        
+        .header-app h1 {
+            margin: 0 0 5px 0;
+            font-size: 1.6em;
+            font-weight: 800;
+        }
+        .header-app p {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+
+        /* BAGIAN LAYANAN/FITUR (DEKORATIF PPOB) */
+        .service-grid {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .service-item {
+            text-align: center;
+            font-size: 0.75em;
+            color: #666;
+            cursor: default;
+        }
+        .service-item i {
+            display: block;
+            font-size: 1.8em;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+            padding: 8px;
+            border-radius: 50%;
+            background-color: #e0f2f1;
+        }
+
+        /* TAB SWITCH */
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            background-color: var(--background-light);
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        .tab-btn {
+            flex-grow: 1;
+            padding: 10px 0;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: #999;
+            background-color: transparent;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .tab-btn.active {
+            color: var(--text-dark);
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* FORM STYLING */
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary-color);
+            font-size: 1.1em;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 137, 123, 0.3);
+        }
+
+        .btn-login {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 15px;
+            box-shadow: 0 4px 8px rgba(0, 137, 123, 0.4);
+        }
+
+        .btn-login:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* PRICE CARD */
+        .price-card {
+            background-color: var(--card-bg);
+            padding: 25px 20px; 
+            border-radius: 12px;
+            box-shadow: var(--shadow-light);
+            text-align: left;
+        }
+        
+        .price-card h2 {
+            color: var(--text-dark);
+            margin-top: 0;
+            font-size: 1.3em; 
+            font-weight: 700;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .price-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .price-item {
+            text-align: center;
+            padding: 15px 10px;
+            /* Perubahan: Gunakan flex-grow untuk mengisi ruang secara responsif */
+            flex-basis: 0; /* Memberi dasar nol */
+            flex-grow: 1; /* Memastikan item tumbuh mengisi ruang */
+            min-width: 120px; /* Memastikan lebar minimum agar teks tidak terlalu menumpuk */
+            max-width: 45%; 
+            border: 1px solid var(--background-light);
+            border-radius: 8px;
+            background-color: #fcfcfc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); 
+        }
+
+        .price-item span {
+            display: block;
+            font-size: 1.4em; 
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 3px;
+        }
+
+        .price-item small {
+            display: block;
+            font-size: 0.9em; 
+            opacity: 0.9;
+            color: #666;
+        }
+
+        /* Responsif untuk layar yang sangat kecil, ubah menjadi satu kolom */
+        @media (max-width: 320px) {
+            .price-item {
+                flex-basis: 100%;
+                max-width: 100%;
+            }
+        }
+
+
+        /* UTILITY */
+        .hidden {
+            display: none !important;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="login-card">
+        
+        <div class="header-app">
+            <h1>Wi-Fi Hotspot</h1>
+            <p>Silakan Login untuk Aktivasi Internet</p>
+        </div>
+
+        <div class="service-grid">
+            <div class="service-item">
+                <i class="fas fa-wifi"></i>
+                Internet
+            </div>
+            <div class="service-item">
+                <i class="fas fa-bolt"></i>
+                Token PLN
+            </div>
+            <div class="service-item">
+                <i class="fas fa-mobile-alt"></i>
+                Pulsa
+            </div>
+            <div class="service-item">
+                <i class="fas fa-coins"></i>
+                E-Wallet
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab-btn active" onclick="showTab('login-full', this)">
+                <i class="fas fa-ticket-alt"></i> Vocher
+            </div>
+            <div class="tab-btn" onclick="showTab('login-simple', this)">
+                <i class="fas fa-user-circle"></i> Member
+            </div>
+        </div>
+
+        <form name="login" action="$(link-login-only)" method="post">
+            <input type="hidden" name="dst" value="$(if-login-dst)" />
+            <input type="hidden" name="popup" value="true" />
+
+            <div id="login-full" class="tab-content">
+                <div class="form-group">
+                    <i class="fas fa-user-tag"></i>
+                    <input name="username" type="text" placeholder="Masukkan Kode Vocher (Username)" required>
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-key"></i>
+                    <input name="password" type="password" placeholder="Masukkan Password Vocher" required>
+                </div>
+            </div>
+
+            <div id="login-simple" class="tab-content hidden">
+                <div class="form-group">
+                    <i class="fas fa-id-card"></i>
+                    <input name="username" type="text" placeholder="Masukkan ID Member Anda" required>
+                    <input name="password" type="hidden" value="member_login_key"> 
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-login">LANJUTKAN LOGIN</button>
+        </form>
+
+        $(if error)
+            <div style="color: var(--primary-color); text-align: center; margin-top: 15px; font-weight: 600; font-size: 0.9em;">
+                $(error)
+            </div>
+        $(endif)
+    </div>
+
+    <div class="price-card">
+        <h2 style="text-align: center;">Daftar Harga Vocher</h2>
+        <div class="price-list">
+            <div class="price-item">
+                <span>Rp 2.000</span>
+                <small>1 Jam</small>
+            </div>
+            <div class="price-item">
+                <span>Rp 3.000</span>
+                <small>12 Jam</small>
+            </div>
+            <div class="price-item">
+                <span>Rp 5.000</span>
+                <small>1 Hari</small>
+            </div>
+            <div class="price-item">
+                <span>Rp 20.000</span>
+                <small>1 Minggu Hari</small>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<script>
+    function showTab(tabId, button) {
+        // Sembunyikan semua konten tab
+        const contents = document.querySelectorAll('.tab-content');
+        contents.forEach(content => content.classList.add('hidden'));
+
+        // Hapus kelas 'active' dari semua tombol
+        const buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        // Tampilkan konten tab yang dipilih
+        document.getElementById(tabId).classList.remove('hidden');
+
+        // Tambahkan kelas 'active' ke tombol yang diklik
+        button.classList.add('active');
+        
+        // Sesuaikan nama field 'password' agar tidak terlihat di tab 'simple'
+        const passwordInput = document.querySelector('input[name="password"]');
+        if (tabId === 'login-simple') {
+            passwordInput.type = 'hidden';
+            passwordInput.value = 'member_login_key'; 
+        } else {
+            passwordInput.type = 'password';
+            passwordInput.value = '';
+        }
+    }
+</script>
+
+</body>
+</html>
