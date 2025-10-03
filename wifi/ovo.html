@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotspot Login - $(identity)</title>
+    <style>
+        /* ====================
+           CSS: Gaya Mirip OVO
+           ==================== */
+        :root {
+            --primary-color: #5d4a96; /* Ungu OVO */
+            --secondary-color: #8c7ae6; /* Ungu Lebih Cerah */
+            --text-light: #f5f6fa;
+            --text-dark: #2f3640;
+            --background-light: #f1f2f6;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* CARD LOGIN UTAMA */
+        .login-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px; /* Tambahkan margin agar terpisah dari harga */
+        }
+
+        /* TAB SWITCH */
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .tab-btn {
+            flex-grow: 1;
+            padding: 10px 0;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: #aaa;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        /* FORM STYLING */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+
+        .btn-login {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* PRICE CARD (Sekarang di Bawah) */
+        .price-card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .price-card h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 1.2em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .price-list {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+
+        .price-item {
+            text-align: center;
+            padding: 5px 10px;
+            border-radius: 8px;
+            background-color: var(--background-light);
+            flex-grow: 1;
+            margin: 0 5px;
+        }
+
+        .price-item span {
+            display: block;
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .price-item small {
+            display: block;
+            font-size: 0.8em;
+            opacity: 0.8;
+            color: var(--text-dark);
+        }
+
+
+        /* UTILITY */
+        .hidden {
+            display: none !important;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="login-card">
+        
+        <div class="tabs">
+            <div class="tab-btn active" onclick="showTab('login-full', this)">
+                Vocher
+            </div>
+            <div class="tab-btn" onclick="showTab('login-simple', this)">
+                Member
+            </div>
+        </div>
+
+        <form name="login" action="$(link-login-only)" method="post">
+            <input type="hidden" name="dst" value="$(if-login-dst)" />
+            <input type="hidden" name="popup" value="true" />
+
+            <div id="login-full" class="tab-content">
+                <div class="form-group">
+                    <input name="username" type="text" placeholder="Username Vocer" required>
+                </div>
+                <div class="form-group">
+                    <input name="password" type="password" placeholder="Password Vocher" required>
+                </div>
+            </div>
+
+            <div id="login-simple" class="tab-content hidden">
+                <div class="form-group">
+                    <input name="username" type="text" placeholder="Username Member" required>
+                    <input name="password" type="hidden" value="member_login_key"> 
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-login">LOGIN SEKARANG</button>
+        </form>
+
+        $(if error)
+            <div style="color: red; text-align: center; margin-top: 15px; font-weight: 600;">
+                $(error)
+            </div>
+        $(endif)
+    </div>
+
+    <div class="price-card">
+        <h2>Daftar Harga Vocher</h2>
+        <div class="price-list">
+            <div class="price-item">
+                <span>Rp 2K</span>
+                <small>1 JAM</small>
+            </div>
+            <div class="price-item">
+                <span>Rp 3K</span>
+                <small>3 JAM</small>
+            </div>
+            <div class="price-item">
+                <span>Rp 5K</span>
+                <small>1 HARI</small>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<script>
+    function showTab(tabId, button) {
+        // Sembunyikan semua konten tab
+        const contents = document.querySelectorAll('.tab-content');
+        contents.forEach(content => content.classList.add('hidden'));
+
+        // Hapus kelas 'active' dari semua tombol
+        const buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        // Tampilkan konten tab yang dipilih
+        document.getElementById(tabId).classList.remove('hidden');
+
+        // Tambahkan kelas 'active' ke tombol yang diklik
+        button.classList.add('active');
+        
+        // Sesuaikan nama field 'password' agar tidak terlihat di tab 'simple'
+        const passwordInput = document.querySelector('input[name="password"]');
+        if (tabId === 'login-simple') {
+            passwordInput.type = 'hidden';
+            // Nilai di sini hanya placeholder. Pastikan user Mikrotik Anda tidak membutuhkan password di backend.
+            passwordInput.value = 'member_login_key'; 
+        } else {
+            passwordInput.type = 'password';
+            passwordInput.value = '';
+        }
+    }
+</script>
+
+</body>
+</html>
