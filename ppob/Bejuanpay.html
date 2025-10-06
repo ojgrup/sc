@@ -1,0 +1,405 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8"></meta>
+    <meta content="width=device-width, initial-scale=1" name="viewport"></meta>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+      /* Warna utama SHOPEE: Oranye dan Abu-abu Muda */
+      :root {
+        --shopee-orange: #ee4d2d; 
+        --shopee-orange-light: #ff745d; 
+        --shopee-grey-bg: #f5f5f5; 
+      }
+
+      /* Mengubah Font menjadi sans-serif standar */
+      body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        padding-bottom: 70px; 
+        background-color: var(--shopee-grey-bg); /* Background abu-abu muda Shopee */
+      }
+
+      /* CSS Tambahan untuk Footer Navigasi */
+      .footer-nav {
+        background-color: white;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        padding: 5px 0;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        z-index: 1000;
+      }
+
+      .footer-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: #999;
+        font-weight: 500;
+        font-size: 10px;
+        line-height: 1.2;
+        padding-top: 5px;
+      }
+
+      .footer-item i {
+        font-size: 20px;
+        margin-bottom: 0px;
+      }
+
+      .footer-item.active {
+        color: var(--shopee-orange); /* Warna aktif Oranye Shopee */
+      }
+
+      /* Header: Mengubah Biru menjadi Oranye Shopee */
+      .header-shopee {
+        background-color: var(--shopee-orange);
+        color: white;
+        border-radius: 0 0 20px 20px; /* Sudut bawah membulat tetap dipertahankan */
+        padding-bottom: 70px;
+        height: 120px; /* Membuat area header oranye lebih tinggi */
+      }
+
+      .saldo-card {
+          border-radius: 15px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          margin-top: -80px; /* Menyesuaikan posisi kartu saldo agar masuk ke area oranye */
+          padding: 15px 10px;
+      }
+
+      /* CSS BARU UNTUK IKON MENU UTAMA */
+      .menu-icon-main {
+          font-size: 22px; 
+          color: white; /* Ikon berwarna putih */
+      }
+      .menu-icon-bg {
+          background-color: var(--shopee-orange-light); /* Latar belakang ikon oranye muda */
+          border-radius: 10px; 
+          width: 50px;
+          height: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 5px;
+      }
+      .menu-item-text {
+          font-size: 12px;
+          font-weight: 500;
+          color: #333;
+      }
+      .menu-row .col {
+          padding-left: 5px;
+          padding-right: 5px;
+      }
+
+      /* Carousel dan Marquee */
+      .marquee-shopee {
+          background-color: var(--shopee-orange); /* Warna Oranye Shopee */
+          border-radius: 8px;
+          padding: 5px 10px;
+          margin-bottom: 15px;
+          font-size: 14px;
+          color: white;
+          font-weight: 500;
+      }
+      .carousel-item img {
+          border-radius: 12px;
+      }
+
+      /* Mengubah Tampilan Menu Lainnya (Bantuan/Pertanyaan) */
+      .other-menu-card {
+          border-radius: 15px;
+          height: 100px; 
+          padding: 10px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+          color: #333;
+          font-weight: 600;
+      }
+      .other-menu-card i {
+          color: var(--shopee-orange); /* Ikon Bantuan/FAQ berwarna Oranye */
+          font-size: 28px;
+          margin-bottom: 5px;
+      }
+      .other-menu-card h1 {
+          font-size: 14px;
+          margin-top: 0;
+          font-weight: 600;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+          font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      }
+    </style>
+    <title>Bejuan ReloadPulsa</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"></link> 
+  </head>
+  <body>
+    <div class="header-shopee">
+      <div class="container pt-3">
+        <h5 class="fw-bold">Hai, {{nama_user}} 👋</h5>
+
+        <i class="fas fa-shopping-cart position-absolute end-0 me-5 mt-1 fs-5"></i>
+        <i class="fas fa-bell position-absolute end-0 me-3 mt-1 fs-5"></i>
+      </div>
+    </div>
+
+    <script>
+      function formatCurrency(saldo) {
+        // Fungsi formatCurrency yang sama
+        saldo = saldo.toString().replace(/\$|\,/g, "");
+        if (isNaN(saldo)) saldo = "0"; 
+        var sign = saldo == (saldo = Math.abs(saldo));
+        saldo = Math.round(parseFloat(saldo) * 100); 
+        var cents = saldo % 100;
+        saldo = Math.floor(saldo / 100).toString();
+        if (cents < 10) cents = "0" + cents;
+        for (var i = 0; i < Math.floor((saldo.length - (1 + i)) / 3); i++)
+          saldo = saldo.substring(0, saldo.length - (4 * i + 3)) + "." + saldo.substring(saldo.length - (4 * i + 3));
+        return (sign ? "" : "-") + "Rp" + saldo; 
+      }
+    </script>
+
+    <div class="container">
+      <div class="card bg-white saldo-card">
+        <div class="row align-items-center">
+          <div class="col-6 border-end">
+            <small class="text-muted d-block" style="font-size: 12px;">Saldo Dompet</small>
+            <h5 class="fw-bold mb-0" style="color: var(--shopee-orange);">
+                Rp<span id="saldo-display">{{saldo_user}}</span>
+            </h5> 
+            <script>
+              document.getElementById('saldo-display').innerHTML = formatCurrency('{{saldo_user}}').replace('Rp', '');
+            </script>
+          </div>
+          <div class="col-6">
+            <div class="row text-center">
+                <div class="col">
+                    <a href="https://bejuanreloadpulsa.olshopku.com/akun/?page=topup" class="text-decoration-none">
+                        <div class="menu-icon-bg mx-auto" style="background-color: var(--shopee-orange);"> 
+                            <i class="fas fa-plus menu-icon-main"></i>
+                        </div>
+                        <div class="menu-item-text">Top Up</div>
+                    </a>
+                </div>
+               
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-4">
+      <marquee class="text-white marquee-shopee">Info! Transaksi normal ya gess ya, Jika ada kendala dalam transaksi harap hubungi admin ya gesss yaa. :)</marquee>
+    </div>
+
+    <div class="container mt-2">
+      <h6 class="fw-bold mb-3">Pulsa, Tagihan & Tiket</h6>
+      <div class="row text-center g-2 menu-row">
+
+        <div class="col-3">
+          <a href="https://bejuanreloadpulsa.olshopku.com/digital/309175" class="text-decoration-none d-block">
+            <div class="menu-icon-bg mx-auto">
+              <i class="fas fa-mobile-alt menu-icon-main"></i>
+            </div>
+            <div class="menu-item-text">Pulsa Reg</div>
+          </a>
+        </div>
+
+        <div class="col-3">
+          <a href="https://bejuanreloadpulsa.olshopku.com/digital/309779" class="text-decoration-none d-block">
+            <div class="menu-icon-bg mx-auto">
+              <i class="fas fa-phone-volume menu-icon-main"></i>
+            </div>
+            <div class="menu-item-text">Telp & SMS</div>
+          </a>
+        </div>
+
+                <div class="col-3">
+          <a href="https://bejuanreloadpulsa.olshopku.com/digital/309778" class="text-decoration-none d-block">
+            <div class="menu-icon-bg mx-auto">
+              <i class="fas fa-piggy-bank menu-icon-main"></i>
+            </div>
+            <div class="menu-item-text">E-Wallet</div>
+          </a>
+        </div>
+
+                <div class="col-3">
+          <a href="https://bejuanreloadpulsa.olshopku.com/digital/309176" class="text-decoration-none d-block">
+            <div class="menu-icon-bg mx-auto">
+              <i class="fas fa-wifi menu-icon-main"></i>
+            </div>
+            <div class="menu-item-text">Internet</div>
+          </a>
+        </div>
+
+        <div class="col-3 mt-3">
+          <a href="https://bejuanreloadpulsa.olshopku.com/digital/309780" class="text-decoration-none d-block">
+            <div class="menu-icon-bg mx-auto">
+              <i class="fas fa-bolt menu-icon-main"></i>
+            </div>
+            <div class="menu-item-text">Listrik</div>
+          </a>
+        </div>
+
+        <div class="col-3 mt-3">
+          <a href="https://bejuanreloadpulsa.olshopku.com/digital/309787" class="text-decoration-none d-block">
+            <div class="menu-icon-bg mx-auto">
+              <i class="fas fa-gamepad menu-icon-main"></i>
+            </div>
+            <div class="menu-item-text">Game</div>
+          </a>
+        </div>
+
+        <div class="col-3 mt-3">
+          <a href="https://bejuanreloadpulsa.olshopku.com/digital/309786" class="text-decoration-none d-block">
+            <div class="menu-icon-bg mx-auto">
+              <i class="fas fa-file-invoice menu-icon-main"></i>
+            </div>
+            <div class="menu-item-text">Tagihan</div>
+          </a>
+        </div>
+
+        <div class="col-3 mt-3">
+            <a href="#" class="text-decoration-none d-block">
+                <div class="menu-icon-bg mx-auto">
+                  <i class="fas fa-ellipsis-h menu-icon-main"></i>
+                </div>
+                <div class="menu-item-text">Lainnya</div>
+            </a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container mt-4">
+      <h6 class="fw-bold mb-3">Promo & Diskon</h6>
+      <div class="carousel slide" data-bs-ride="carousel" id="carouselExampleIndicators">
+        <div class="carousel-indicators">
+          <button aria-current="true" aria-label="Slide 1" class="active" data-bs-slide-to="0" data-bs-target="#carouselExampleIndicators" type="button"></button>
+          <button aria-label="Slide 2" data-bs-slide-to="1" data-bs-target="#carouselExampleIndicators" type="button"></button>
+          <button aria-label="Slide 3" data-bs-slide-to="2" data-bs-target="#carouselExampleIndicators" type="button"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img alt="Banner 1" class="d-block w-100" src="https://raw.githubusercontent.com/ojgrup/sc/refs/heads/main/gambar/unblurimageai_1000104776.png" />
+          </div>
+          <div class="carousel-item">
+            <img alt="Banner 2" class="d-block w-100" src="https://raw.githubusercontent.com/ojgrup/sc/refs/heads/main/gambar/unblurimageai_1000104773.png" />
+          </div>
+          <div class="carousel-item">
+            <img alt="Banner 3" class="d-block w-100" src="https://raw.githubusercontent.com/ojgrup/sc/refs/heads/main/gambar/unblurimageai_1000104773.png" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mb-4 mt-4">
+      <h6 class="fw-bold mb-3">Layanan Kami</h6>
+      <div class="row g-2">
+        <div class="col-6">
+          <a href="https://wa.me/6282319617604" class="card shadow-sm other-menu-card">
+            <i class="fas fa-headset"></i>
+            <h1 class="text-dark">Bantuan</h1>
+          </a>
+        </div>
+        <div class="col-6">
+          <div class="card shadow-sm other-menu-card" data-bs-target="#exampleModal" data-bs-toggle="modal" type="button">
+            <i class="fas fa-question-circle"></i>
+            <h1 class="text-dark">Info FAQ</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Pertanyaan yang Sering Diajukan</h5>
+            <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                  <button aria-controls="flush-collapseOne" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#flush-collapseOne" data-bs-toggle="collapse" type="button">
+                    Berapa lama pesanan diproses?
+                  </button>
+                </h2>
+                <div aria-labelledby="flush-headingOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample" id="flush-collapseOne">
+                  <div class="accordion-body">Biasanya jika server sedang lancar hanya butuh waktu 1-5 menit saja.</div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                  <button aria-controls="flush-collapseTwo" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#flush-collapseTwo" data-bs-toggle="collapse" type="button">Metode Pembayaran</button>
+                </h2>
+                <div aria-labelledby="flush-headingTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample" id="flushcollapseTwo">
+                  <div class="accordion-body">
+                    Ada banyak metode pembayaran yang bisa anda pilih:
+                    <br />
+                    <strong>E-Wallet</strong>
+                    <br />1. Dana <br />2. Gopay <br />3. Shopeepay <br />4. Link Aja <br />5. Qris <br /><strong>Transfer Bank</strong> <br />1. BRI <br />2. BCA <br />3. Mandiri <br />4. VA BRI <br />5. VA BCA <br />6. VA Mandiri
+                    <br />7. VA BNI
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingThree">
+                  <button aria-controls="flush-collapseThree" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#flush-collapseThree" data-bs-toggle="collapse" type="button">Cara Menghubungi Admin</button>
+                </h2>
+                <div aria-labelledby="flush-headingThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample" id="flush-collapseThree">
+                  <div class="accordion-body">
+                    Anda bisa cari di menu pusat bantuan atau <a href="https://wa.me/6282319617604" style="text-decoration: none;">klik disini</a>
+                  </div>
+                </div>
+              </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn text-white" style="background-color: var(--shopee-orange);" data-bs-dismiss="modal" type="button">Tutup</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="fixed-bottom footer-nav">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col">
+                    <a class="footer-item active" href="https://bejuanreloadpulsa.olshopku.com/beranda">
+                        <i class="fas fa-home"></i>
+                        Beranda
+                    </a>
+                </div>
+                <div class="col">
+                    <a class="footer-item" href="https://bejuanreloadpulsa.olshopku.com/akun/?page=order">
+                        <i class="fas fa-receipt"></i>
+                        Transaksi
+                    </a>
+                </div>
+                <div class="col">
+                    <a class="footer-item" href="https://bejuanreloadpulsa.olshopku.com/akun/?page=topup">
+                        <i class="fas fa-wallet"></i>
+                        Dompet
+                    </a>
+                </div>
+                <div class="col">
+                    <a class="footer-item" href="https://bejuanreloadpulsa.olshopku.com/akun">
+                        <i class="fas fa-user-circle"></i>
+                        Saya
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script crossorigin="anonymous" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+                                                                                                                        </html>
