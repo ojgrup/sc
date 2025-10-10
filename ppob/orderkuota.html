@@ -1,0 +1,391 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8"></meta>
+    <meta content="width=device-width, initial-scale=1" name="viewport"></meta>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+      /* WARNA UTAMA: HIJAU TOSKA APLIKASI */
+      :root {
+        --app-primary: #129e92; /* Hijau Toska Tua untuk Header/Teks Utama */
+        --app-light: #2bc0b7; /* Hijau Toska Muda untuk Latar Ikon */
+        --app-secondary: #ff7f50; /* Oranye untuk tombol persetujuan/trx */
+        --app-grey-bg: #f8f8f8; /* Background abu-abu muda */
+        --app-card-bg: #ffffff; /* Latar belakang kartu putih */
+        --text-color: #333333; /* Warna teks gelap */
+      }
+
+      /* Mengubah Font menjadi sans-serif standar */
+      body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        background-color: var(--app-grey-bg); /* Background abu-abu muda */
+        /* padding-bottom: 60px; DIHAPUS karena footer sudah hilang */
+        padding-bottom: 20px; /* Padding minimal agar konten bawah tidak terlalu mepet */
+      }
+
+      /* Header: Mengubah Oranye Shopee menjadi Hijau Toska */
+      .header-app {
+        background-color: var(--app-primary);
+        color: white;
+        border-radius: 0 0 20px 20px; /* Sudut bawah membulat */
+        height: 150px; /* Membuat area header lebih tinggi */
+        position: relative; /* Penting untuk penempatan elemen di dalamnya */
+      }
+
+      /* Gaya untuk Saldo Akun (Rp 18.512) */
+      .saldo-info {
+        position: absolute;
+        top: 70px; /* Menyesuaikan posisi di bawah sapaan */
+        left: 0;
+        right: 0;
+        margin: 0 1rem;
+        padding: 0;
+      }
+
+      .saldo-value {
+        font-size: 20px; /* Ukuran font lebih besar */
+        font-weight: bold;
+      }
+
+      /* Kartu Menu Utama (Top Up, Transfer, dll) */
+      .main-menu-card {
+        background-color: var(--app-card-bg);
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-top: 15px; /* Menyesuaikan posisi di bawah Saldo */
+        padding: 15px 0;
+      }
+
+      /* Gaya untuk Ikon Menu Utama (Top Up, Transfer, dll) */
+      .main-menu-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: var(--text-color);
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .main-menu-item i {
+        font-size: 20px; 
+        color: #28a745; /* Ikon berwarna Hijau Toska */
+        margin-bottom: 5px;
+      }
+
+      /* Badge/Kotak di samping saldo (Persetujuan dan QRIS) */
+      .badge-saldo {
+          border-radius: 8px;
+          padding: 8px 10px;
+          font-size: 10px;
+          font-weight: 600;
+          color: white;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+      }
+      .badge-persetujuan {
+        background-color: #34495e; /* Biru Tua/Gelap */
+      }
+      .badge-qris {
+        background-color: #ff7f50; /* Oranye */
+      }
+      .badge-qris i {
+        font-size: 18px;
+        margin-bottom: 2px;
+      }
+
+      /* --- BAGIAN BEST SELLER --- */
+
+      .section-title {
+        color: var(--text-color);
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      /* Container untuk Ikon Produk */
+      .product-menu-container {
+        padding: 10px 5px;
+        background-color: var(--app-card-bg);
+        border-radius: 15px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      /* Gaya untuk Ikon Produk (Pulsa, E-wallet, dll) */
+      .product-item {
+          text-decoration: none;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          margin-bottom: 15px; /* Spasi antar baris ikon */
+      }
+
+      .product-icon-bg {
+          width: 50px;
+          height: 50px;
+          background-color: var(--app-card-bg); /* Latar ikon putih */
+          border-radius: 50%; /* Bulat */
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sedikit bayangan */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 5px;
+          overflow: hidden; /* Penting untuk gambar ikon */
+      }
+      .product-icon-bg img {
+        width: 100%; /* Ikon gambar penuh */
+        height: 100%;
+        object-fit: contain; /* Memastikan gambar terlihat semua */
+      }
+      .product-icon-bg i {
+        font-size: 28px;
+        color: var(--app-primary); /* Ikon Font Awesome berwarna Hijau Toska */
+      }
+
+      .product-item-text {
+          font-size: 11px;
+          font-weight: 500;
+          color: var(--text-color);
+          line-height: 1.2;
+      }
+
+      /* --- BAGIAN KEMITRAAN --- */
+
+      .partnership-menu {
+        padding: 10px 5px;
+        background-color: var(--app-card-bg);
+        border-radius: 15px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+      .partnership-item {
+          text-decoration: none;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          font-size: 12px;
+          font-weight: 500;
+          color: var(--text-color);
+      }
+      .partnership-item img {
+          width: 40px;
+          height: 40px;
+          margin-bottom: 5px;
+      }
+
+      /* Banner Iklan */
+      .banner-iklan {
+          border-radius: 12px;
+          margin-top: 15px;
+          margin-bottom: 15px;
+          overflow: hidden;
+      }
+      
+      h1, h2, h3, h4, h5, h6 {
+          font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      }
+
+      /* CSS Footer Navigasi yang Dihapus
+      .footer-nav, .footer-item, .footer-item.active { ... } 
+      */
+    </style>
+    <title>Kios Mahusin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"></link> 
+  </head>
+  <body>
+    <div class="header-app">
+      <div class="d-flex justify-content-between align-items-center pt-2 px-3">
+        
+      </div>
+      
+      <div class="container pt-1 d-flex justify-content-between align-items-center">
+        <i class="fas fa-bars fs-4"></i>
+
+              <div class="container pt-3">
+        <h5 class="fw-bold">Hai, {{nama_user}} 👋</h5>
+             
+        </div>
+      </div>
+
+      <div class="saldo-info container">
+        <div class="d-flex align-items-center mb-2">
+            <div class="me-3">
+               
+                <span class="saldo-value text-white">
+                   Saldo Akun👉 Rp<span id="saldo-display">{{saldo_user}}</span>
+                </span>
+            </div>
+            
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function formatCurrency(saldo) {
+        saldo = saldo.toString().replace(/\$|\,/g, "");
+        if (isNaN(saldo)) saldo = "0"; 
+        var sign = saldo == (saldo = Math.abs(saldo));
+        saldo = Math.round(parseFloat(saldo) * 100); 
+        var cents = saldo % 100;
+        saldo = Math.floor(saldo / 100).toString();
+        if (cents < 10) cents = "0" + cents;
+        for (var i = 0; i < Math.floor((saldo.length - (1 + i)) / 3); i++)
+          saldo = saldo.substring(0, saldo.length - (4 * i + 3)) + "." + saldo.substring(saldo.length - (4 * i + 3));
+        return (sign ? "" : "-") + "Rp" + saldo; 
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+          const saldoElement = document.getElementById('saldo-display');
+          if (saldoElement && '{{saldo_user}}') {
+              saldoElement.textContent = formatCurrency('{{saldo_user}}').replace('Rp', '').trim();
+          } else if (saldoElement) {
+              saldoElement.textContent = formatCurrency('18512').replace('Rp', '').trim();
+          }
+      });
+    </script>
+    
+
+    <div class="container">
+      <div class="card bg-white main-menu-card">
+        <div class="row text-center">
+          <div class="col">
+            <a href="https://bejuanreloadpulsa.olshopku.com/akun/?page=topup" class="main-menu-item">
+                <i class="fas fa-plus-circle" style="color: #28a745;"></i>
+                <div>Top Up</div>
+            </a>
+          </div>
+          <div class="col">
+            <a href="#" class="main-menu-item">
+                <i class="fas fa-exchange-alt" style="color: #28a745;"></i>
+                <div>Transfer</div>
+            </a>
+          </div>
+          <div class="col">
+            <a href="#" class="main-menu-item">
+                <i class="fas fa-download" style="color: #28a745;"></i>
+                <div>Tarik Tunai</div>
+            </a>
+          </div>
+          <div class="col">
+            <a href="#" class="main-menu-item">
+                <i class="fas fa-qrcode" style="color: #28a745;"></i>
+                <div>Merchant</div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container banner-iklan">
+        <img alt="Banner Iklan" class="d-block w-100" src="https://raw.githubusercontent.com/ojgrup/sc/refs/heads/main/gambar/unblurimageai_1000104776.png" />
+    </div>
+
+
+    <div class="container mt-2">
+      <div class="d-flex justify-content-between align-items-center">
+        <h6 class="section-title mb-0">Best Seller</h6>
+        <span class="badge rounded-pill text-white" style="background-color: #ff7f50;">BONUS 5.000</span>
+      </div>
+      
+      <div class="row text-center product-menu-container g-1">
+        
+        <div class="col-3">
+          <a href="#" class="product-item">
+            <div class="product-icon-bg">
+              <i class="fas fa-mobile-alt" style="color: #2bc0b7;"></i> </div>
+            <div class="product-item-text">Pulsa Nasional</div>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="#" class="product-item">
+            <div class="product-icon-bg">
+              <i class="fas fa-comment-dots" style="color: #2bc0b7;"></i> </div>
+            <div class="product-item-text">Sms & Telp</div>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="#" class="product-item">
+            <div class="product-icon-bg">
+              <i class="fas fa-wallet" style="color: #2bc0b7;"></i> </div>
+            <div class="product-item-text">e-Wallet</div>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="#" class="product-item">
+            <div class="product-icon-bg">
+              <i class="fas fa-lightbulb" style="color: #2bc0b7;"></i> </div>
+            <div class="product-item-text">Token PLN</div>
+          </a>
+        </div>
+
+        <div class="col-3">
+          <a href="#" class="product-item">
+            <div class="product-icon-bg">
+              <img src="https://via.placeholder.com/50/9b59b6/FFFFFF?text=TRI" alt="PDAM">
+            </div>
+            <div class="product-item-text">PDAM</div>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="#" class="product-item">
+            <div class="product-icon-bg">
+              <img src="https://via.placeholder.com/50/1abc9c/FFFFFF?text=XL" alt="TAGIHAN">
+            </div>
+            <div class="product-item-text">TAGIHAN</div>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="#" class="product-item">
+            <div class="product-icon-bg">
+              <img src="https://via.placeholder.com/50/f1c40f/FFFFFF?text=By.U" alt="By.U">
+            </div>
+            <div class="product-item-text">By.U</div>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="#" class="product-item">
+            <div class="product-icon-bg">
+             <img src="https://shorturl.at/UuMQO" alt="Logo"></div>
+            <div class="product-item-text">Digital</div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+    
+    <div class="container mt-4">
+      <h6 class="section-title">Kemitraan</h6>
+      <div class="row text-center partnership-menu g-3">
+        
+        <div class="col-3">
+          <a href="#" class="partnership-item">
+            <img src="https://via.placeholder.com/40/3498db/FFFFFF?text=E-toll" alt="Topup Saldo E-toll">
+            <div>Topup Saldo E-toll</div>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="#" class="partnership-item">
+            <img src="https://via.placeholder.com/40/2ecc71/FFFFFF?text=Belanja" alt="Bayar Belanjaan">
+            <div>Bayar Belanjaan</div>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="#" class="partnership-item">
+            <img src="https://via.placeholder.com/40/e74c3c/FFFFFF?text=Tagihan" alt="Bayar Tagihan">
+            <div>Bayar Tagihan</div>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="#" class="partnership-item">
+            <img src="https://via.placeholder.com/40/f39c12/FFFFFF?text=EDC" alt="EDC Mini Atm">
+            <div>EDC Mini Atm</div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <script crossorigin="anonymous" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+              </html>
+              
