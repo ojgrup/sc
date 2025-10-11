@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PPOB BukaOlshop</title>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:700,400&display=swap" rel="stylesheet">
+  <style>
+    /* PERBAIKAN: Atur HTML dan BODY agar tidak ada margin bawaan & cegah scroll horizontal */
+    html, body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; 
+    }
+    
+    body {
+      background: #f5f7fa;
+      font-family: 'Nunito', Arial, sans-serif;
+      color: #212b36;
+      /* Mengurangi padding-bottom karena footer dihapus */
+      padding-bottom: 30px; 
+    }
+    .top-bg {
+      background: linear-gradient(180deg, #1366d6 0%, #247be7 100%);
+      padding: 30px 0 80px 0;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+      position: relative;
+    }
+    .header {
+      color: #fff;
+      /* Disesuaikan agar simetris dengan margin elemen di bawahnya */
+      padding: 0 16px; 
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.7px;
+    }
+    .header span {
+      font-weight: 100%;
+    }
+    
+    /* PERBAIKAN: Gunakan margin simetris (misalnya 16px) dan box-sizing */
+    .card-balance {
+      background: #0854b1;
+      color: #fff;
+      margin: -40px 16px 0 16px; /* Mengganti 'width: 92%;' dan 'margin: auto;' */
+      box-shadow: 0 4px 24px rgba(21, 53, 111, 0.15);
+      border-radius: 18px;
+      width: auto; /* Membiarkan lebar menyesuaikan margin */
+      padding: 26px 20px 18px 20px;
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-sizing: border-box; /* SANGAT PENTING: padding tidak menambah lebar */
+    }
+    .card-balance .subtitle {
+      font-size: 13px;
+      opacity: .89;
+      margin-bottom: -10px;
+    }
+    .card-balance .saldo {
+      font-size: 29px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    .card-balance .saldo svg {
+      margin-left: 8px;
+      cursor: pointer;
+      opacity: 0.85;
+    }
+    .card-balance .rekening-link {
+      font-size: 15px;
+      opacity: .92;
+      margin-top: 3px;
+      cursor: pointer;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+    
+    /* PERBAIKAN: Gunakan margin simetris untuk elemen-elemen utama */
+    .feature-shortcut-row {
+      width: auto;
+      max-width: 380px;
+      margin: 18px 16px 0 16px; /* Disesuaikan */
+      display: flex;
+      justify-content: space-between;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0px 2px 12px rgba(50, 80, 151, 0.09);
+      padding: 8px 0;
+      box-sizing: border-box;
+    }
+    /* Menghapus gaya cursor pada .feature-shortcut karena digantikan oleh <a> */
+    .feature-shortcut {
+      flex: 1;
+      text-align: center;
+      font-size: 13px;
+      color: #212b36;
+      font-weight: 600;
+      text-decoration: none; /* Hapus garis bawah dari link */
+    }
+    .feature-shortcut img {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      margin-bottom: 4px;
+      background: #eaf2fb;
+      padding: 7px;
+    }
+
+    /* PERBAIKAN: Gunakan margin simetris untuk elemen-elemen utama */
+    .banner {
+      margin: 18px 16px 14px 16px; /* Disesuaikan */
+      width: auto;
+      max-width: 380px;
+      background: linear-gradient(90deg, #ffa231 78%, #ffd780 100%);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(50,80,151,0.09);
+      font-size: 15px;
+      color: #fff;
+      font-weight: 700;
+      box-sizing: border-box;
+    }
+    .banner span {
+      margin-left: auto;
+      background: #fff3e0;
+      border-radius: 8px;
+      color: #ff8000;
+      padding: 5px 13px;
+      font-size: 15px;
+      box-shadow: 0 1.5px 5px rgba(50,80,151,0.10);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* PERBAIKAN: Gunakan margin simetris untuk elemen-elemen utama */
+    .search-box {
+      margin: 0 16px 10px 16px; /* Disesuaikan */
+      width: auto;
+      max-width: 380px;
+      position: relative;
+      z-index: 5;
+      box-sizing: border-box;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 13px 14px 13px 39px;
+      border-radius: 13px;
+      border: none;
+      font-size: 16px;
+      background: #f0f5fa;
+      margin-bottom: 2px;
+      box-sizing: border-box; /* Penting untuk input agar padding tidak menambah lebar */
+      outline: none;
+      box-shadow: 0 1px 5px rgba(50,80,151,0.06);
+    }
+    .search-box svg {
+      position: absolute;
+      left: 10px;
+      top: 16px;
+      opacity: 0.6;
+    }
+
+    /* PERBAIKAN: Gunakan margin simetris untuk elemen-elemen utama */
+    .features-grid {
+      margin: 10px 16px 0 16px; /* Disesuaikan */
+      width: auto;
+      max-width: 380px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px 8px;
+    }
+    /* Menghapus gaya cursor pada .feature-grid-item karena digantikan oleh <a> */
+    .feature-grid-item {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #212b36;
+      text-decoration: none; /* Hapus garis bawah dari link */
+    }
+    .feature-grid-item img {
+      width: 41px;
+      height: 41px;
+      margin-bottom: 5px;
+      border-radius: 11px;
+      background: #eaf2fb;
+      padding: 7px;
+      box-shadow: 0 1px 3px rgba(50,80,151,0.08);
+    }
+    
+    /* --- CSS UNTUK PUSAT BANTUAN (Lainnya) --- */
+    .more-section {
+      width: auto;
+      max-width: 380px;
+      margin: 28px 16px 0 16px; /* Margin atas 28px untuk pemisah visual */
+    }
+    .more-section .section-title {
+      font-size: 21px;
+      font-weight: 700;
+      color: #212b36;
+      margin-bottom: 12px;
+    }
+    .more-section .separator {
+      height: 1px;
+      background: #e7e7e7;
+      margin-bottom: 20px;
+    }
+    .help-options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px; /* Jarak antar tombol */
+    }
+    .help-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px 15px;
+      text-align: center;
+      box-shadow: 0px 4px 16px rgba(50, 80, 151, 0.08);
+      font-weight: 700;
+      color: #212b36;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100px;
+      box-sizing: border-box;
+      text-decoration: none; /* Hapus garis bawah dari link */
+    }
+    .help-card svg {
+      width: 45px;
+      height: 45px;
+      margin-bottom: 8px;
+    }
+    /* --------------------------------------------- */
+    
+    /* CSS FOOTER NAV DIHAPUS */
+
+  </style>
+</head>
+<body>
+  <div class="top-bg">
+    <div class="header">
+      Haii bozku,👉 <span>{{nama_user}}</span>
+    </div>
+  </div>
+
+  <script>
+    function formatCurrency(saldo) {
+      saldo = saldo.toString().replace(/\$|\,/g, "");
+      if (isNaN(saldo)) saldo = "0"; 
+      var sign = saldo == (saldo = Math.abs(saldo));
+      saldo = Math.round(parseFloat(saldo) * 100); 
+      var cents = saldo % 100;
+      saldo = Math.floor(saldo / 100).toString();
+      if (cents < 10) cents = "0" + cents;
+      for (var i = 0; i < Math.floor((saldo.length - (1 + i)) / 3); i++)
+        saldo = saldo.substring(0, saldo.length - (4 * i + 3)) + "." + saldo.substring(saldo.length - (4 * i + 3));
+      return (sign ? "" : "-") + "Rp" + saldo; 
+    }
+  </script>
+
+  <div class="card-balance">
+    <div class="subtitle">Saldo Rekening</div>
+    <div class="saldo">
+      Rp &nbsp; <span id="saldo-display">{{saldo_user}}</span>
+      
+      <script>             
+        document.getElementById('saldo-display').innerHTML = formatCurrency('{{saldo_user}}').replace('Rp', '');
+      </script>
+ 
+    </div>
+   
+  </div>
+
+  <div class="feature-shortcut-row">
+    <a href="#top-up" class="feature-shortcut">
+      <img src="https://cdn-icons-png.flaticon.com/512/9967/9967446.png" alt="Top up">
+     <br/> Top up
+    </a>
+
+ <a href="#pdam" class="feature-shortcut">
+      <img src="https://atm-intl.com/wp-content/uploads/2015/03/icons-fungsi-01.png" alt="Tarik Tunai">
+     <br/> Tarik Tunai
+    </a>
+
+    <a href="#transaksi" class="feature-shortcut">
+      <img src="https://img.icons8.com/fluency/48/000000/notepad.png" alt="Transaksi">
+     <br/> Transaksi
+    </a>
+    
+  </div>
+
+ <div class="banner">
+  7 Cara Jadi Sultan Tanpa Warisan orang tua
+  <a href="URL_TUJUAN_ANDA"><span>Lihat&rarr;</span></a>
+</div>
+
+
+  <div class="search-box">
+    <svg height="20" width="20" viewBox="0 0 20 20" fill="#1366d6">
+      <circle cx="9" cy="9" r="7" stroke="#1366d6" stroke-width="2" fill="none"/>
+      <line x1="15" y1="15" x2="19" y2="19" stroke="#1366d6" stroke-width="2"/>
+    </svg>
+    <input type="text" placeholder="Cari Fitur" />
+  </div>
+
+  <div class="features-grid">
+    <a href="#pulsa" class="feature-grid-item">
+      <img src="https://www.traveldata.id/assets/icon/pulsa.png" alt="pulsa">
+      pulsa
+    </a>
+    <a href="#paket-data" class="feature-grid-item">
+      <img src="https://www.traveldata.id/assets/icon/paket_data.png" alt="Paket Data">
+      Paket Data
+    </a>
+    <a href="#sms-telp" class="feature-grid-item">
+      <img src="https://cdn-icons-png.freepik.com/512/6601/6601772.png" alt="SMS & Telp">
+      SMS & Telp
+    </a>
+    <a href="#setor-tarik" class="feature-grid-item">
+      <img src="https://img.icons8.com/fluency/48/000000/atm.png" alt="Setor & Tarik Tunai">
+      Setor &<br>Tarik Tunai
+    </a>
+    <a href="#e-wallet" class="feature-grid-item">
+      <img src="https://cdn-icons-png.freepik.com/512/17899/17899535.png" alt="E-Wallet">
+      <br/> E-Wallet
+    </a>
+    <a href="#virtual-debit" class="feature-grid-item">
+      <img src="https://png.pngtree.com/png-clipart/20250105/original/pngtree-atm-card-banking-flat-icon-png-image_5477455.png" alt="Virtual Debit">
+      Virtual Debit
+    </a>
+    <a href="#catatan-keuangan" class="feature-grid-item">
+      <img src="https://img.icons8.com/fluency/48/000000/notepad.png" alt="Catatan Keuangan">
+      Catatan Keuangan
+    </a>
+    <a href="#investasi" class="feature-grid-item">
+      <img src="https://img.icons8.com/fluency/48/000000/investment.png" alt="Investasi">
+      Investasi
+    </a>
+  </div>
+
+  <div class="more-section">
+    <div class="section-title">Lainnya</div>
+    <div class="separator"></div>
+    <div class="help-options-grid">
+      
+      <a href="#bantuan" class="help-card bantuan-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#e50f38">
+            <path d="M480 352c-15.3 0-30.7-3.2-45-9.6c-17.7-7.2-35.4-9.9-52.9-7.1c-19.1 3.1-37.1 11.6-51.5 24.3l-27.1 23.4c-35.3 30.5-76.1 52.7-118.9 66c-5.8 1.8-12.2 2.7-18.7 2.7c-21.7 0-41.9-8.4-56.9-23.4l-7.3-7.3c-24.9-24.9-38.6-58.4-38.6-93.5V144C32 64.6 96.6 0 176 0H336c79.4 0 144 64.6 144 144v208zm-96-32V144c0-44.1-35.9-80-80-80H176c-44.1 0-80 35.9-80 80v176c0 14.8 4.1 29.3 11.9 41.6l23 37.1c11.3 18.2 29 28.3 48.7 28.3c7.2 0 14.4-1.2 21.2-3.8c42.5-16.5 81.3-43.9 113.1-78.7l23.1-25.1c14.2-15.3 32.2-22.7 50.4-21.7c17.5 1 35.7 3.9 52.7 10.6c7.7 3 15.6 4.4 23.5 4.4z"/>
+        </svg>
+        Bantuan
+      </a>
+      
+      <a href="#pertanyaan" class="help-card tanya-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#e50f38">
+            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32s-32-14.3-32-32V160c0-17.7 14.3-32 32-32zm-32 288a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/>
+        </svg>
+        Pertanyaan
+      </a>
+    </div>
+  </div>
+  </body>
+</html>
