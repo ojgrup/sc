@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPOB Home - Mirip GoPay</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Reset Dasar */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f5f5f5; /* Background abu-abu muda */
+        }
+
+        .mobile-container {
+            max-width: 450px; /* Lebar khas tampilan mobile */
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Styling tambahan agar tautan tidak merusak tampilan */
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Styling untuk Ikon URL (Gambar) agar ukurannya konsisten */
+        .gopay-actions img {
+            /* Meniru gaya lingkaran putih Font Awesome */
+            background-color: white;
+            color: #00b395; 
+            border-radius: 50%;
+            padding: 5px;
+            width: 20px; 
+            height: 20px; 
+            object-fit: contain;
+            margin-bottom: 5px;
+        }
+        
+        /* Ikon menu 4/8-Grid */
+        .transfer-grid img {
+            /* Meniru gaya ikon kotak di transfer-grid */
+            padding: 0;
+            border-radius: 15px;
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            margin-bottom: 5px;
+        }
+
+        /* ------------------ HEADER ATAS ------------------ */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #ffffff;
+        }
+
+        .user-info i {
+            font-size: 24px;
+            color: #4a4a4a; /* Warna Ikon User Placeholder */
+        }
+
+        .security-status a { 
+            display: flex;
+            align-items: center;
+            background-color: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #4a4a4a;
+        }
+
+        .security-status .fa-shield-alt.red {
+            color: #d9534f; /* Warna merah untuk status 0% */
+            margin-right: 5px;
+        }
+
+        .secure-text {
+            margin-left: 5px;
+            font-weight: bold;
+        }
+
+        .help-icon i {
+            font-size: 24px;
+            color: #4a4a4a;
+        }
+
+        /* ------------------ GOPAY SECTION ------------------ */
+        .gopay-section {
+            padding: 10px 15px 0;
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, #00b395, #008770); /* Gradient hijau-biru khas GoPay */
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden; 
+        }
+
+        .gopay-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .gopay-label {
+            font-weight: bold;
+        }
+
+        .gopay-balance {
+            margin: 5px 0 2px;
+        }
+
+        .gopay-balance .rp {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .gopay-balance .amount {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .gopay-coins {
+            font-size: 14px;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .gopay-actions {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255, 255, 255, 0.15); /* Background transparan untuk aksi */
+            border-radius: 10px;
+            padding: 10px 0;
+            margin-bottom: 15px;
+        }
+        
+        .action-item a { 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+        }
+
+
+        .action-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 50%;
+        }
+        
+        /* Teks "Gratis" */
+        .action-item::before {
+            content: 'Gratis';
+            position: absolute;
+            top: -5px;
+            right: 15px;
+            background-color: #4CAF50; /* Hijau */
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* Karena Top up dan Tarik tunai ada di dalam container yang sama, kita perlu atur posisi "Gratis" secara spesifik */
+        .action-item.top-up {
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+
+        .action-item.tarik-tunai {
+            position: relative;
+        }
+        
+        .action-item.top-up::before {
+            right: auto; 
+            left: 15px; 
+        }
+        
+        .action-item.tarik-tunai::before {
+            right: 15px; 
+        }
+        
+        /* Tambahan: Ganti ikon 'Gratis' dengan motif daun di kanan atas card */
+        .balance-card::after {
+            content: ''; 
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            content: "🌿✨"; 
+            font-size: 20px;
+            opacity: 0.8;
+        }
+
+        .additional-features {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            margin-top: 10px;
+        }
+
+        .feature-link {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .feature-link i {
+            margin-right: 5px;
+        }
+        
+        .usage-info a { 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f7f7f7;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #4a4a4a;
+        }
+        
+        .usage-info i:last-child {
+            color: #00b395; /* Panah ke kanan warna hijau */
+        }
+
+        /* ------------------ KIRIM & TERIMA SECTION ------------------ */
+        .main-section.kirim-terima {
+            padding: 20px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .section-header h2 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        .section-header a {
+            color: #00b395;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* --- STYLING BANNER SLIDER YANG DIMODIFIKASI UNTUK RESPONSIVITAS --- */
+        .promo-slider-wrapper {
+            width: 100%;
+            /* Hapus properti height yang fix */
+            height: 0; 
+            /* DIUBAH: Menggunakan 50% untuk rasio aspek 2:1 */
+            padding-bottom: 50%; 
+            position: relative; 
+            
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .slider-container {
+            position: absolute; 
+            top: 0;
+            left: 0;
+            width: 200%; 
+            height: 100%; /* Ambil 100% tinggi dari wrapper yang sudah diset oleh padding-bottom */
+            display: flex;
+            animation: slide-banner 8s infinite ease-in-out; 
+        }
+
+        .slider-item {
+            width: 50%; 
+            height: 100%;
+            flex-shrink: 0;
+        }
+
+        .slider-item a {
+            display: block;
+            height: 100%;
+        }
+
+        .slider-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            border-radius: 8px; 
+        }
+
+        @keyframes slide-banner {
+            0% { transform: translateX(0); } 
+            40% { transform: translateX(0); }
+            50% { transform: translateX(-50%); } 
+            90% { transform: translateX(-50%); }
+            100% { transform: translateX(0); } 
+        }
+        /* --- AKHIR STYLING BANNER SLIDER YANG DIMODIFIKASI --- */
+
+
+        .transfer-grid {
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: flex-start;
+            text-align: center;
+            gap: 10px 0;
+            padding-bottom: 20px; 
+        }
+        
+        .grid-item a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .grid-item {
+            flex: 0 0 25%;
+            max-width: 25%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+            color: #4a4a4a;
+            cursor: pointer;
+            padding: 0 5px; 
+            box-sizing: border-box; 
+            margin-bottom: 10px; 
+        }
+        
+        /* ------------------ BANTUAN & INFORMASI SECTION (Modifikasi Ikon) ------------------ */
+        .main-section.pembayaran-section {
+            padding: 20px 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 100px; 
+        }
+
+        .pembayaran-grid {
+            /* Meniru tata letak flex-wrap/grid 4-kolom, tapi hanya menggunakan 2 item */
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 15px;
+        }
+
+        .pembayaran-item {
+            /* Atur item agar mengambil 25% * 2 = 50% dari lebar container untuk 2 menu */
+            flex: 0 0 50%;
+            max-width: 50%; 
+            text-align: center;
+            font-size: 12px; /* Ukuran teks kecil di bawah ikon */
+            color: #4a4a4a;
+            cursor: pointer;
+            padding: 0 5px; 
+            box-sizing: border-box; 
+        }
+        
+        .pembayaran-item a {
+            display: flex;
+            flex-direction: column; /* Ikon di atas, teks di bawah */
+            align-items: center;
+            padding: 0;
+            border: none; /* Hapus border dari gaya sebelumnya */
+            background-color: transparent; /* Hapus background dari gaya sebelumnya */
+            width: 100%;
+        }
+        
+        .pembayaran-item img {
+            /* Gaya Ikon besar untuk Hubungi Kami & Pertanyaan */
+            padding: 0;
+            border-radius: 15px;
+            width: 48px; 
+            height: 48px;
+            object-fit: contain;
+            margin-bottom: 5px;
+        }
+        
+        /* ------------------ QRIS BUTTON ------------------ */
+        .qris-button-container {
+            position: fixed; 
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .qris-button {
+            background-color: #8bc34a; 
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <header class="top-header">
+            <a href="#" class="user-info">
+                <i class="fas fa-user-circle"></i> 
+            </a>
+            <div class="security-status">
+                <a href="#">
+                    <i class="fas fa-shield-alt red"></i> <span>100%</span>
+                    <span class="secure-text">Saldo Aman!</span>
+                </a>
+            </div>
+            <a href="#" class="help-icon">
+                <i class="fas fa-question-circle"></i>
+            </a>
+        </header>
+
+        <div class="gopay-section">
+            <div class="balance-card">
+                <div class="gopay-header">
+                    <span class="gopay-label"> Hai, {{nama_user}} </span>
+                    
+                </div>
+
+<script>
+      function formatCurrency(saldo) {
+        // Fungsi formatCurrency yang sama
+        saldo = saldo.toString().replace(/\$|\,/g, "");
+        if (isNaN(saldo)) saldo = "0"; 
+        var sign = saldo == (saldo = Math.abs(saldo));
+        saldo = Math.round(parseFloat(saldo) * 100); 
+        var cents = saldo % 100;
+        saldo = Math.floor(saldo / 100).toString();
+        if (cents < 10) cents = "0" + cents;
+        for (var i = 0; i < Math.floor((saldo.length - (1 + i)) / 3); i++)
+          saldo = saldo.substring(0, saldo.length - (4 * i + 3)) + "." + saldo.substring(saldo.length - (4 * i + 3));
+        return (sign ? "" : "-") + "Rp" + saldo; 
+      }
+    </script>
+
+
+                <div class="gopay-balance">
+                    <span class="rp">Rp </span><span class="amount" id="saldo-display"> {{saldo_user}} </span>
+
+      <script>                 document.getElementById('saldo-display').innerHTML = formatCurrency('{{saldo_user}}').replace('Rp', '');
+      </script>
+
+                </div>
+               
+                <div class="gopay-actions">
+                    <div class="action-item top-up">
+                        <a href="https://bejuanreloadpulsa.olshopku.com/akun/?page=topup">
+                            <img src="https://cdn-icons-png.flaticon.com/512/9092/9092739.png" alt="Top Up Icon">
+                            <span>Top up</span>
+                        </a>
+                    </div>
+                    <div class="action-item tarik-tunai">
+                        <a href="#">
+                            <img src="https://atm-intl.com/wp-content/uploads/2015/03/icons-fungsi-01.png" alt="Tarik Tunai Icon">
+                            <span>Tarik tunai</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="additional-features">
+                    <a href="#" class="feature-link">
+                        <i class="fas fa-umbrella"></i> Asuransi mulai 1rb
+                    </a>
+                    <a href="#" class="feature-link activate-loan">
+                        <i class="fas fa-coins"></i> Aktifin Pinjam
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <hr>
+
+ 
+            
+            <div class="promo-slider-wrapper">
+                <div class="slider-container">
+                    
+                    <div class="slider-item">
+                        <a href="#">
+                            <img src="https://shorturl.at/QJzrb" alt="Banner Promo 1">
+                        </a>
+                    </div>
+                    
+                    <div class="slider-item">
+                        <a href="#">
+                            <img src="https://shorturl.at/jRcuu" alt="Banner Promo 2">
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="transfer-grid">
+                
+                <div class="grid-item">
+                    <a href="#">
+                        <img src="https://www.traveldata.id/assets/icon/pulsa.png" alt="Pulsa Regular">
+                        <span>Pulsa Regular</span>
+                    </a>
+                </div>
+                
+                <div class="grid-item">
+                    <a href="#">
+                        <img src="https://cdn-icons-png.flaticon.com/512/179/179888.png" alt="SMS & Telp">
+                        <span>SMS & Telp</span>
+                    </a>
+                </div>
+                
+                <div class="grid-item">
+                    <a href="#">
+                        <img src="https://www.traveldata.id/assets/icon/paket_data.png" alt="Paket Data">
+                        <span>Paket Data</span>
+                    </a>
+                </div>
+                
+                <div class="grid-item">
+                    <a href="#">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhUYJgmlFOI0Br1OLYrJs_vSgItkIOQWLVRM_IkVzVxFCD_Tsp1ntdxp-4HH_OcN65iJ-q5JXMED9gcToYittld_ROPOLhsaf9rP05q1aqGfMdGCAqQnfXmKII2SAir8BmfS8T0NAiI60yyIVVcEDpEDFHWuihfhRSDOuE6XQX5ZaAUp1lyEpZ2V335H0Xo/s1600/mudah-dan-aman-aplikasi-agen-ppob.png" alt="PLN">
+                        <span>PLN</span>
+                    </a>
+                </div>
+                
+                <div class="grid-item">
+                    <a href="#">
+                        <img src="https://siplah.blibli.com/data/images/SCMA-0010-00676/8e892096-2aec-44a3-aa34-b2f9d4d01ff4.png" alt="PDAM">
+                        <span>PDAM</span>
+                    </a>
+                </div>
+                
+                <div class="grid-item">
+                    <a href="#">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1572/1572766.png" alt="Tagihan">
+                        <span>Tagihan</span>
+                    </a>
+                </div>
+
+                <div class="grid-item">
+                    <a href="#">
+                        <img src="https://cdn-icons-png.flaticon.com/256/10069/10069353.png" alt="Voucher Game">
+                        <span>Voucher Game</span>
+                    </a>
+                </div>
+
+                <div class="grid-item">
+                    <a href="#">
+                        <img src="https://cdn-icons-png.freepik.com/512/2878/2878574.png" alt="E-Wallet">
+                        <span>E-Wallet</span>
+                    </a>
+                </div>
+                
+            </div>
+            
+        </div>
+        
+        <hr>
+        
+        <div class="main-section pembayaran-section">
+            <div class="section-header">
+                <h2>Bantuan & Informasi</h2>
+                </div>
+            
+            <div class="pembayaran-grid">
+                
+<div class="pembayaran-item">
+                    <a href="#">
+                        <img src="https://krakatau-quelle.co.id/wp-content/uploads/2022/08/icon-hubungi-kami-removebg-preview.png" alt="Hubungi Kami Icon">
+                        <span>Hubungi Kami</span>
+                    </a>
+                </div>
+                
+                <div class="pembayaran-item">
+                    <a href="#">
+                        <img src="https://cdn-icons-png.flaticon.com/512/9713/9713425.png" alt="Pertanyaan Umum Icon">
+                        <span>Pertanyaan Umum</span>
+                    </a>
+                </div>
+                
+                </div>
+        </div>
+        
+        <hr>
+
+        <div class="qris-button-container">
+            <button class="qris-button" onclick="void(0)">QRIS</button>
+        </div>
+        
+        </div>
+</body>
+</html>
