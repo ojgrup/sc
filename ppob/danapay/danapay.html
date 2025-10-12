@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPOB Home - Mirip DANA (Tanpa Footer)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Warna Khas DANA */
+        :root {
+            --dana-blue: #108EE9;
+            --dana-light-blue: #32A0F5;
+            --background-grey: #f7f7f7;
+            --text-dark: #333;
+        }
+
+        /* Reset Dasar */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--background-grey);
+        }
+
+        .mobile-container {
+            max-width: 450px; 
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        /* ------------------ HEADER ATAS ------------------ */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--dana-blue);
+            color: white;
+            position: sticky; 
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-icons i {
+            font-size: 24px;
+            margin-left: 15px;
+        }
+
+        /* ------------------ DANA BALANCE CARD ------------------ */
+        .dana-section {
+            padding: 0 15px 15px;
+            background-color: var(--dana-blue); 
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, var(--dana-blue), var(--dana-light-blue)); 
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        .balance-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .balance-amount .label {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-bottom: 2px;
+        }
+
+        .balance-amount .amount {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .dana-actions {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .action-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 500;
+            width: 25%;
+        }
+
+        .action-item i {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        /* ------------------ MENU UTAMA ------------------ */
+        .main-menu {
+            padding: 15px;
+            background-color: white;
+            margin-top: -10px; 
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .menu-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            text-align: center;
+            gap: 15px 0;
+            padding: 0 5px; 
+        }
+        
+        .grid-item {
+            flex: 0 0 25%;
+            max-width: 25%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 11px;
+            color: var(--text-dark);
+            box-sizing: border-box;
+            padding: 0 5px;
+        }
+        
+        .grid-item a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .grid-item img {
+            width: 36px; 
+            height: 36px; 
+            object-fit: contain;
+            margin-bottom: 5px;
+        }
+        
+        /* ------------------ PROMO SECTION (Banner) ------------------ */
+        .promo-section {
+            padding: 15px;
+            background-color: white;
+            padding-bottom: 20px; 
+        }
+        
+        .promo-section.top-banner {
+            margin-top: 0; 
+            padding-bottom: 15px; 
+        }
+        
+        .promo-header {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        /* CSS BANNER */
+        .banner-slider-container {
+            overflow: hidden; 
+            position: relative;
+            border-radius: 8px;
+        }
+        
+        .banner-slider-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .banner-slide {
+            flex: 0 0 100%;
+            width: 100%;
+            height: 150px; 
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .banner-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            display: block;
+        }
+        
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            position: absolute; 
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+        }
+
+        .dot {
+            height: 6px;
+            width: 6px;
+            margin: 0 4px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: white;
+            width: 15px;
+            border-radius: 3px;
+        }
+        
+        /* ⭐⭐ CSS BARU UNTUK BERITA & TIPS SECTION ⭐⭐ */
+        .news-tip-section {
+            padding: 15px;
+            background-color: white; 
+            margin-top: 10px;
+            padding-bottom: 30px;
+        }
+
+        .news-tip-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            /* Warna Background yang Lebih Menarik (Sangat Light Blue) */
+            background-color: #E8F5FF; 
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: background-color 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .news-tip-item:hover {
+            background-color: #D3EAFD; 
+        }
+
+        .news-tip-content {
+            flex-grow: 1;
+            font-size: 14px;
+        }
+
+        .news-tip-icon i {
+            color: var(--dana-blue); 
+            font-size: 16px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        
+        <header class="top-header">
+            <div class="header-left">
+                <a href="#"> <span>Hii, {{nama_user}}</span>
+                </a>
+            </div>
+
+            <script>
+                  function formatCurrency(saldo) {
+                    saldo = saldo.toString().replace(/\$|\,/g, "");
+                    if (isNaN(saldo)) saldo = "0"; 
+                    var sign = saldo == (saldo = Math.abs(saldo));
+                    saldo = Math.round(parseFloat(saldo) * 100); 
+                    var cents = saldo % 100;
+                    saldo = Math.floor(saldo / 100).toString();
+                    if (cents < 10) cents = "0" + cents;
+                    for (var i = 0; i < Math.floor((saldo.length - (1 + i)) / 3); i++)
+                      saldo = saldo.substring(0, saldo.length - (4 * i + 3)) + "." + saldo.substring(saldo.length - (4 * i + 3));
+                    return (sign ? "" : "-") + "Rp" + saldo; 
+                  }
+                </script>
+
+            <div class="header-right header-icons">
+                <a href="#"><i class="fas fa-search"></i></a>
+                <a href="#"><i class="fas fa-bell"></i></a>
+            </div>
+        </header>
+
+        <div class="dana-section">
+            <div class="balance-card">
+                <div class="balance-info">
+                    <div class="balance-amount">
+                        <div class="label">Total Saldo</div>
+                        <span class="rp">Rp </span><span class="amount" id="saldo-display"> {{saldo_user}} </span>
+                        
+                       <script>document.getElementById('saldo-display').innerHTML = formatCurrency('{{saldo_user}}').replace('Rp', '');</script>
+                    </div>
+                  
+                </div>
+                
+                <div class="dana-actions">
+                    <div class="action-item top-up">
+                        <a href="#">
+                            <i class="fas fa-plus-circle"></i> 
+                            <span>Isi Saldo</span>
+                        </a>
+                    </div>
+                    <div class="action-item kirim">
+                        <a href="#">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Kirim</span>
+                        </a>
+                    </div>
+                    <div class="action-item tarik">
+                        <a href="#">
+                            <i class="fas fa-wallet"></i>
+                            <span>Tarik</span>
+                        </a>
+                    </div>
+                    <div class="action-item history">
+                        <a href="#">
+                            <i class="fas fa-history"></i>
+                            <span>Riwayat</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="promo-section top-banner">
+            
+            <div class="banner-slider-container">
+                <div class="banner-slider-wrapper" id="banner-wrapper">
+                    
+                    <a href="https://link-tujuan-promo-1.com" class="banner-slide">
+                        <img src="https://shorturl.at/jRcuu" alt="Banner1">
+                    </a>
+
+                    <a href="https://link-tujuan-promo-2.com" class="banner-slide">
+                        <img src="https://shorturl.at/QJzrb" alt="Banner2">
+                    </a>
+                    
+                </div>
+                
+                <div class="slider-dots">
+                    <span class="dot active" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                </div>
+                
+            </div>
+        </div>
+        <div class="main-menu">
+            <div class="menu-grid">
+                
+                <div class="grid-item"><a href="#"><img src="https://www.traveldata.id/assets/icon/pulsa.png" alt="Pulsa"><span>Pulsa Reguler</span></a></div>
+                <div class="grid-item"><a href="#"><img src="https://cdn-icons-png.freepik.com/512/3109/3109329.png" alt="SMS & telp"><span>SMS & Telp</span></a></div>
+                <div class="grid-item"><a href="#"><img src="https://ubiqu.id/wp-content/uploads/2021/08/icon-topup-2-e1527753501557.png" alt="Paket Data"><span>Paket Data</span></a></div>
+                <div class="grid-item"><a href="#"><img src="https://pln24.wordpress.com/wp-content/uploads/2013/07/perusahaan_listrik_negara.png" alt="pln"><span>PLN</span></a></div>
+                <div class="grid-item"><a href="#"><img src="https://web.mojokertokota.go.id/images/fasilitas/CguTlbAnPDt7xGwfBGlMJib4mVnIo3ZoNjkLbQnz.png" alt="PDAM"><span>PDAM</span></a></div>
+                <div class="grid-item"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/762/762613.png" alt="tagihan"><span>Tagihan</span></a></div>
+                <div class="grid-item"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/8293/8293566.png" alt="Vocer Game"><span>Vocer Game</span></a></div>
+                <div class="grid-item"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2878/2878574.png" alt="E-Wallet"><span>E-Wallet</span></a></div>
+                
+            </div>
+        </div>
+        
+        <div class="news-tip-section">
+            <p style="font-size: 16px; font-weight: bold; color: var(--text-dark); margin-top: 0;">Berita & Tips</p>
+            
+            <a href="https://link-ke-artikel-aman-digital.com" class="news-tip-item">
+                <span class="news-tip-content">Cara aman menghindari penipuan digital. Baca selengkapnya!</span>
+                <span class="news-tip-icon"><i class="fas fa-chevron-right"></i></span>
+            </a>
+
+            <a href="https://link-ke-artikel-bonus-saldo.com" class="news-tip-item">
+                <span class="news-tip-content">Dapatkan bonus saldo untuk setiap transaksi tagihan Anda.</span>
+                <span class="news-tip-icon"><i class="fas fa-chevron-right"></i></span>
+            </a>
+        </div>
+        </div>
+
+    <script>
+        // Logika JavaScript untuk mengelola slider otomatis dan navigasi dots
+        let slideIndex = 1;
+        const wrapper = document.getElementById('banner-wrapper');
+        const dots = document.querySelectorAll('.dot');
+        const totalSlides = 2; 
+        let autoSlideTimeout; 
+        
+        showSlides(slideIndex);
+        
+        // Fungsi untuk navigasi manual melalui dots
+        function currentSlide(n) {
+            clearTimeout(autoSlideTimeout); 
+            showSlides(slideIndex = n);
+            startAutoSlide(); 
+        }
+
+        // Fungsi utama untuk menampilkan slide
+        function showSlides(n) {
+            if (n > totalSlides) {slideIndex = 1} 
+            if (n < 1) {slideIndex = totalSlides}
+            
+            // Menghitung offset untuk pergeseran (transform)
+            const offset = (slideIndex - 1) * -100;
+            wrapper.style.transform = `translateX(${offset}%)`;
+            
+            // Update dots
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[slideIndex-1].classList.add('active');
+        }
+        
+        // Fungsi untuk auto-slide
+        function autoSlide() {
+            slideIndex++;
+            showSlides(slideIndex);
+            autoSlideTimeout = setTimeout(autoSlide, 4000); 
+        }
+        
+        // Fungsi untuk memulai auto-slide
+        function startAutoSlide() {
+            clearTimeout(autoSlideTimeout); 
+            autoSlideTimeout = setTimeout(autoSlide, 4000);
+        }
+        
+        // Jalankan auto-slide
+        startAutoSlide();
+    </script>
+
+</body>
+  </html>
+  
